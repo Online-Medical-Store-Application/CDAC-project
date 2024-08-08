@@ -2,19 +2,18 @@ import { useState } from "react";
 import { addProduct } from "../services/product";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 function AddProduct() {
-  const [title, setTitle] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [address, setAddress] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [rent, setRent] = useState("");
-  const [details, setDetails] = useState("");
+  const [Image, setImage] = useState("");
+  const [ProductName, setProductName] = useState("");
+  const [Description, setDescription] = useState("");
+  const [Price, setPrice] = useState("");
+  const [Stock, setStock] = useState("");
 
   const navigate = useNavigate();
 
   const addNewProduct = async () => {
-    const result = await addProduct(title, details, contactName, contactNumber, address, rent);
+    const result = await addProduct(Image, ProductName, Description, Price, Stock);
     console.log(result);
 
     if (result["status"] == "success") {
@@ -27,90 +26,85 @@ function AddProduct() {
 
   return (
     <div>
-      <h2 className="page-title">Add product</h2>
+      <header>
+        <Link to="/home">
+          <h2>Medico</h2>
+        </Link>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/login">Logout</Link>
+            </li>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link to="/manageProfiles">User</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="admin-container">
+        <h2>Add New Product</h2>
+        <label for="image">Product Image:</label>
+        <input
+          onChange={(e) => {
+            setImage(e.target.value);
+          }}
+          type="file"
+          id="image"
+          name="image"
+          required
+        />
 
-      <div className="form">
-        <div className="mb-3">
-          <label htmlFor="">Title</label>
-          <input
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            type="text"
-            className="form-control"
-          />
-        </div>
+        <label for="name">Product Name:</label>
+        <input
+          onChange={(e) => {
+            setProductName(e.target.value);
+          }}
+          type="text"
+          id="name"
+          name="name"
+          required
+        />
 
-        <div className="row">
-          <div className="col">
-            <div className="mb-3">
-              <label htmlFor="">Contact Name</label>
-              <input
-                onChange={(e) => {
-                  setContactName(e.target.value);
-                }}
-                type="text"
-                className="form-control"
-              />
-            </div>
-          </div>
-          <div className="col">
-            <div className="mb-3">
-              <label htmlFor="">Contact Number</label>
-              <input
-                onChange={(e) => {
-                  setContactNumber(e.target.value);
-                }}
-                type="text"
-                className="form-control"
-              />
-            </div>
-          </div>
-        </div>
+        <label for="description">Description:</label>
+        <textarea
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          id="description"
+          name="description"
+          required
+        ></textarea>
 
-        <div className="row">
-          <div className="col">
-            <div className="mb-3">
-              <label htmlFor="">Address</label>
-              <input
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-                type="text"
-                className="form-control"
-              />
-            </div>
-          </div>
-          <div className="col">
-            <div className="mb-3">
-              <label htmlFor="">Rent</label>
-              <input
-                onChange={(e) => {
-                  setRent(e.target.value);
-                }}
-                type="number"
-                className="form-control"
-              />
-            </div>
-          </div>
-        </div>
+        <label for="price">Price:</label>
+        <input
+          onChange={(e) => {
+            setPrice(e.target.value);
+          }}
+          type="number"
+          id="price"
+          name="price"
+          required
+        />
 
-        <div className="mb-3">
-          <label htmlFor="">Details</label>
-          <textarea
-            onChange={(e) => {
-              setDetails(e.target.value);
-            }}
-            rows="10"
-            className="form-control"
-          ></textarea>
-        </div>
+        <label for="stock">Stock Status:</label>
+        <select
+          id="stock"
+          name="stock"
+          required
+          onChange={(e) => {
+            setStock(e.target.value);
+          }}
+        >
+          <option value="In Stock">In Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
 
-        <div className="mb-3">
-          <button onClick={addNewProduct} className="btn btn-success">
-            Save
-          </button>
-        </div>
+        <button onClick={addNewProduct} className="btn btn-success">
+          Add Product
+        </button>
       </div>
     </div>
   );

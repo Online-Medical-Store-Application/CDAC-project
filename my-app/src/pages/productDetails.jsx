@@ -3,131 +3,85 @@ import { getProductDetails } from "../services/product";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import config from "../config";
+import medicine from "../medicine.jpg";
 
 function ProductDetails() {
-  const { propertyId } = useParams();
-  const [details, setDetails] = useState(undefined);
+  // const { propertyId } = useParams();
+  // const [details, setDetails] = useState(undefined);
 
-  // collect all the amenities
-  const [amenities, setAmenities] = useState([]);
+  // const loadProductDetails = async () => {
+  //   const result = await getProductDetails(propertyId);
+  //   if (result["status"] === "success") {
+  //     const details = result["data"];
 
-  const loadProductDetails = async () => {
-    const result = await getProductDetails(propertyId);
-    if (result["status"] === "success") {
-      const details = result["data"];
+  //     setDetails(result["data"]);
+  //     console.log(result["data"]);
+  //   } else {
+  //     toast.error(result["error"]);
+  //   }
+  // };
 
-      // clear the array
-      amenities.splice(0, amenities.length);
-
-      amenities.push({
-        icon: "droplet",
-        title: "Lake nearby",
-        status: details.isLakeView,
-      });
-      amenities.push({
-        icon: "tv",
-        title: "TV available",
-        status: details.isTV,
-      });
-      amenities.push({
-        icon: "fan",
-        title: "AC Available",
-        status: details.isAC,
-      });
-      amenities.push({
-        icon: "wifi",
-        title: "WiFi Available",
-        status: details.isWifi,
-      });
-      amenities.push({
-        icon: "cup-straw",
-        title: "Minibar available",
-        status: details.isMiniBar,
-      });
-      amenities.push({
-        icon: "p-circle",
-        title: "Parking available",
-        status: details.isParking,
-      });
-      amenities.push({
-        icon: "egg-fried",
-        title: "Breakfast available",
-        status: details.isBreakfast,
-      });
-
-      setAmenities(amenities);
-      setDetails(result["data"]);
-      console.log(result["data"]);
-    } else {
-      toast.error(result["error"]);
-    }
-  };
-
-  useEffect(() => {
-    loadProductDetails();
-  }, []);
+  // useEffect(() => {
+  //   loadProductDetails();
+  // }, []);
 
   return (
     <div>
-      {details && (
-        <div className="mt-5">
-          <h3 style={{ fontSize: 26 }}>{details.title}</h3>
-          <hr />
-
-          <img className="mt-2" style={{ height: 300 }} src={`${config.url}/image/${details.profileImage}`} />
-          <div className="mt-2">
-            <h4 className="mt-2"> {details.address}</h4>
-            <div>
-              {details.beds} beds, {details.bathrooms} bathrooms
-            </div>
-          </div>
-          <hr />
-
-          <div className="mt-3">
-            <div>
-              Hosted by: <span style={{ fontWeight: "bold" }}>{details.ownerName}</span>
-            </div>
-            <div>{details.contactNo}</div>
-            <hr />
-          </div>
-          <div className="mt-3">
-            <h4>About the place</h4>
-            <div>{details.details}</div>
-            <hr />
-          </div>
-
-          <div className="mt-3">
-            <h4>This place offers</h4>
-            <div className="row">
-              <div className="col">
-                {amenities.map((amenity) => {
-                  return (
-                    <div>
-                      <i className={`bi bi-${amenity.icon}`} style={{ fontSize: 30 }} />
-                      <span
-                        className="ms-3"
-                        style={{
-                          textDecoration: amenity.status == 0 ? "line-through" : "none",
-                        }}
-                      >
-                        {amenity.title}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="col"></div>
-              <div className="col"></div>
-            </div>
-
-            <div className="mt-5">
-              <Link to="/home" className="btn btn-primary">
-                Back
+      <header>
+        <Link to="/home">
+          <h2>Medico</h2>
+        </Link>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/login">Logout</Link>
+            </li>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <select id="filter" name="filter">
+                <option value="" selected>
+                  select
+                </option>
+                <option value="Featured">Featured</option>
+                <option value="Price Low to High">Price Low to High</option>
+                <option value="Price High to Low">Price High to Low</option>
+              </select>
+            </li>
+            <li>
+              <Link to="/manageProfiles">User</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <div>
+          <section class="search-bar">
+            <form action="#">
+              <input type="text" id="search-term" placeholder="Search for medicines" />
+              <Link to={"/SearchResult"} class="search-bar button">
+                Search
               </Link>
-            </div>
-          </div>
+            </form>
+          </section>
         </div>
-      )}
+        <section class="search-result">
+          <h2>Product name</h2>
+          <img src={medicine} alt="Medicine Image" class="search-result-image" />
+          <h3>Medicine Name</h3>
+          <p class="description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod est ac lorem aliquet scelerisque. Donec euismod est ac lorem aliquet scelerisque. Donec euismod est ac lorem aliquet
+            scelerisque. Donec euismod est ac lorem aliquet scelerisque.
+          </p>
+          <div class="details">
+            <p>
+              <b>Price:</b> $10.00
+            </p>
+            <button>Add to Cart</button>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

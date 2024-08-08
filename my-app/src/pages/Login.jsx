@@ -86,8 +86,8 @@ function LoginUser() {
                   Dont have an account yet? <Link to="/register">Register here</Link>
                 </div>
 
-                <button class="login-btn" onClick={onLogin} >
-                  Login
+                <button class="login-btn" onClick={onLogin}>
+                  <Link to="/home">Login</Link>
                 </button>
               </div>
             </div>

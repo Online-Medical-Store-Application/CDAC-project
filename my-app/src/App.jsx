@@ -12,7 +12,8 @@ import AddProduct from "./pages/addProduct";
 import ProductDetails from "./pages/productDetails";
 import Checkout from "./pages/checkout";
 import { useSelector } from "react-redux";
-
+import ManageProfiles from "./pages/manageprofiles";
+import SearchResult from "./pages/searchResult";
 function App() {
   const user = useSelector((state) => state.user);
 
@@ -30,7 +31,9 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/product-details/:propertyId" element={<ProductDetails />} />
+          <Route path="/productDetails" element={<ProductDetails />} />
+          <Route path="/manageProfiles" element={<ManageProfiles />} />
+          <Route path="/SearchResult" element={<SearchResult />} />
         </Routes>
 
         <ToastContainer />
