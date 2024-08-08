@@ -26,30 +26,14 @@ export async function getProductDetails(id) {
   return response.data;
 }
 
-export async function addProduct(title, details, contactName, contactNumber, address, rent) {
+export async function addProduct() {
   // read the token from sessionStorage
   // const token = sessionStorage.token
   // const token = sessionStorage['token']
   const token = sessionStorage.getItem("token");
 
   const body = {
-    title,
-    details,
-    rent,
-    address,
-    contactNo: contactNumber,
-    ownerName: contactName,
-    isLakeView: 0,
-    isTV: 1,
-    isAC: 1,
-    isWifi: 1,
-    isMiniBar: 0,
-    isBreakfast: 1,
-    isParking: 1,
-    guests: 3,
-    bedrooms: 2,
-    beds: 2,
-    bathrooms: 1,
+    
   };
 
   const response = await axios.post(`${config.url}/product`, body, {

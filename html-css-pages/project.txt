@@ -1,0 +1,54 @@
+CREATE TABLE `user` (
+`user_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`full_name` VARCHAR(100),
+`email` VARCHAR(100),
+`password` VARCHAR(100)
+);
+
+
+CREATE TABLE `products` (
+`product_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`product_name` VARCHAR(20),`description` VARCHAR(1000),
+`price` FLOAT(5),
+`image_url` VARCHAR(50),
+`category_id` INT(50),
+FOREIGN KEY (`category_id`) REFERENCES `category`(`category_id`)
+);
+
+
+CREATE TABLE `cart` (
+`cart_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`product_id` INT(50),
+`user_id` INT(50),
+`quantity` INT(10)
+);
+
+
+
+CREATE TABLE `orders` (
+`order_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`user_id` INT(50),
+`cart_id` INT(50),
+`total` FLOAT(10),
+`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
+FOREIGN KEY (`cart_id`) REFERENCES `cart`(`cart_id`)
+);
+
+
+
+CREATE TABLE `category` (
+`category_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`category_name` VARCHAR(50)
+);
+
+
+CREATE TABLE `reviews` (
+`review_id` INT(50) AUTO_INCREMENT PRIMARY KEY,
+`user_id` INT(50),
+`product_id` INT(50),
+`rating` INT(5),
+`comment` VARCHAR(100),
+FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
+FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`)
+);

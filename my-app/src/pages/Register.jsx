@@ -30,8 +30,6 @@ function RegisterUser() {
     // client side validation
     if (firstName.length === 0) {
       toast.warning("enter first name");
-    } else if (lastName.length === 0) {
-      toast.warning("enter last name");
     } else if (email.length === 0) {
       toast.warning("enter email");
     } else if (!isValidEmail()) {

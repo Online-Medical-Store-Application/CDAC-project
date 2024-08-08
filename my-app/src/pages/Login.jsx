@@ -1,34 +1,34 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../services/user'
-import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
-import { loginAction } from '../features/userSlice'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/user";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../features/userSlice";
 
 function LoginUser() {
   // create state members
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // get the navigate object
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // use dispatch to update global state
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onLogin = async () => {
     // client side validation
     if (email.length === 0) {
-      toast.warning('enter email')
+      toast.warning("enter email");
     } else if (password.length === 0) {
-      toast.warning('enter password')
+      toast.warning("enter password");
     } else {
-      const result = await login(email, password)
-      if (result['status'] === 'success') {
+      const result = await login(email, password);
+      if (result["status"] === "success") {
         // read the token
         // const token = result['data']['token']
         // const name = result['data']['name']
-        const { token, name } = result['data']
+        const { token, name } = result["data"];
 
         // set the data in session storage
         // sessionStorage.token = token
@@ -37,65 +37,67 @@ function LoginUser() {
         // sessionStorage['token'] = token
         // sessionStorage['name'] = name
 
-        sessionStorage.setItem('token', token)
-        sessionStorage.setItem('name', name)
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("name", name);
 
         // set the login status to true
-        dispatch(loginAction())
+        dispatch(loginAction());
 
-        toast.success('welcome to the application')
-        navigate('/home')
+        toast.success("welcome to the application");
+        navigate("/home");
       } else {
-        toast.error('invalid email or password')
+        toast.error("invalid email or password");
       }
     }
-  }
+  };
 
   return (
-    <div>
-      <h2 className='page-title'>Login</h2>
+    <div class="login-container">
+      <div class="login-form">
+        <h2 className="page-title">Login</h2>
 
-      <div className='row'>
-        <div className='col'></div>
+        <div className="row">
+          <div className="col"></div>
 
-        <div className='col'>
-          <div className='form'>
-            <div className='mb-3'>
-              <label htmlFor=''>Email</label>
-              <input
-                onChange={(e) => {
-                  setEmail(e.target.value)
-                }}
-                type='email'
-                className='form-control'
-              />
-            </div>
-            <div className='mb-3'>
-              <label htmlFor=''>Password</label>
-              <input
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                }}
-                type='password'
-                className='form-control'
-              />
-            </div>
-            <div className='mb-3'>
-              <div>
-                Dont have an account yet?{' '}
-                <Link to='/register'>Register here</Link>
+          <div className="col">
+            <div className="form">
+              <div className="mb-3">
+                <label htmlFor="">Email</label>
+                <input
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  type="email"
+                  className="form-control"
+                />
               </div>
-              <button onClick={onLogin} className='mt-2 btn btn-success'>
-                Login
-              </button>
+              <div className="mb-3">
+                <label htmlFor="">Password</label>
+                <input
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  type="password"
+                  className="form-control"
+                />
+              </div>
+              <div className="mb-3">
+                <div class="sign-up-link">
+                  Dont have an account yet? <Link to="/register">Register here</Link>
+                </div>
+
+                <button class="login-btn" onClick={onLogin} >
+                  Login
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className='col'></div>
+          <div className="col"></div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default LoginUser
+export default LoginUser;
