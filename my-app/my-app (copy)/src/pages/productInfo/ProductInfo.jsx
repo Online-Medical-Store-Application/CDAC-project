@@ -13,21 +13,21 @@ const ProductInfo = () => {
   const context = useContext(myContext);
   const { loading, setLoading } = context;
 
-  const [product, setProduct] = useState({}); 
-  const { id } = useParams();
+  const [product, setProduct] = useState({});   
+  const { productId } = useParams();
 
-  // getProductData
   const getProductData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/api/products/${id}`); // Adjust the URL to your API endpoint
-      setProduct(response.data);
+        const response = await axios.get(`http://localhost:8080/api/public/products/${productId}`);
+        setProduct(response.data);
     } catch (error) {
-      console.log(error);
+        console.log(error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+
 
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -61,11 +61,11 @@ const ProductInfo = () => {
           <Container>
             <Row className="mb-4">
               <Col md={6}>
-                <img className="w-100 rounded-lg" src={product?.productImageUrl} alt={product?.title} />
+                <img className="w-100 rounded-lg" src={product?.image} alt={product?.productName} />
               </Col>
               <Col md={6}>
                 <div className="ps-md-4">
-                  <h2 className="mb-4">{product?.title}</h2>
+                  <h2 className="mb-4">{product?.productName}</h2>
                   <div className="mb-4">
                     <div className="d-flex mb-3">
                       {[...Array(4)].map((_, index) => (
@@ -89,7 +89,7 @@ const ProductInfo = () => {
                     <p>{product?.description}</p>
                   </div>
                   <div className="mb-4">
-                    {cartItems.some((p) => p.id === product.id) ? (
+                    {cartItems.some((p) => p.productId === product.productId) ? (
                       <Button onClick={() => deleteCart(product)} className="w-100" variant="danger">
                         Remove from cart
                       </Button>

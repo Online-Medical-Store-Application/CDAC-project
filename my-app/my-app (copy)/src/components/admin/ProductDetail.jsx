@@ -11,17 +11,6 @@ const ProductDetail = ({ products }) => {
   const { loading, setLoading, getAllProductFunction } = context;
   const navigate = useNavigate();
 
-  const category = [
-    { id: "1", name: "drugs" },
-    { id: "2", name: "injection" },
-    { id: "3", name: "cosmetic" },
-    { id: "4", name: "homeo" },
-    { id: "5", name: "pain-relief" },
-    { id: "6", name: "devices" },
-    { id: "7", name: "vitamins" },
-    { id: "8", name: "first-Aid" },
-  ];
-
   const deleteProduct = async (id) => {
     setLoading(true);
     try {
@@ -38,12 +27,6 @@ const ProductDetail = ({ products }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Function to get category name by ID
-  const getCategoryName = (categoryId) => {
-    const categoryObj = category.find((cat) => cat.id === categoryId);
-    return categoryObj ? categoryObj.name : "Unknown";
   };
 
   return (
@@ -69,13 +52,13 @@ const ProductDetail = ({ products }) => {
               <th>Image</th>
               <th>Title</th>
               <th>Price</th>
-              <th>Category</th>
+              <th>Quantity</th> {/* Updated Column */}
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {products.map((item, index) => {
-              const { productId, productName, price, image, categoryId } = item;
+              const { productId, productName, price, image, quantity } = item; // Destructure quantity
               return (
                 <tr key={productId}>
                   <td>{index + 1}</td>
@@ -84,7 +67,7 @@ const ProductDetail = ({ products }) => {
                   </td>
                   <td>{productName}</td>
                   <td>₹{price.toFixed(2)}</td>
-                  <td>{getCategoryName(categoryId)}</td>
+                  <td>{quantity}</td> {/* Display Quantity */}
                   <td>
                     <button className="btn btn-success btn-sm me-2" onClick={() => navigate(`/updateproduct/${productId}`)}>
                       Edit

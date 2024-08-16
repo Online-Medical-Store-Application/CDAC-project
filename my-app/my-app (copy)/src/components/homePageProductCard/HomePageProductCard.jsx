@@ -89,6 +89,7 @@ const HomePageProductCard = () => {
                   <div className="card border-secondary shadow-sm">
                     <img
                       onClick={() => navigate(`/productinfo/${productId}`)}
+
                       className="card-img-top"
                       src={image}
                       alt="Product"

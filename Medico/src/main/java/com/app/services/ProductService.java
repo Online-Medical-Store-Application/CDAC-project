@@ -27,4 +27,6 @@ public interface ProductService {
 
 	String deleteProduct(Long productId);
 
+	ProductDTO getProductById(Long id);
+
 }

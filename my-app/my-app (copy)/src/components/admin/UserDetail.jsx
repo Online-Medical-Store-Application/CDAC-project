@@ -17,20 +17,20 @@ const UserDetail = ({ users }) => {
               <th>S.No.</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Uid</th>
+              <th>User ID</th>
               <th>Role</th>
-              <th>Date</th>
             </tr>
           </thead>
           <tbody>
             {users.map((value, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{value.name}</td>
+                {/* Construct the full name from firstName and lastName */}
+                <td>{value.firstName ? `${value.firstName} ${value.lastName}` : 'N/A'}</td>
                 <td>{value.email}</td>
-                <td>{value.uid}</td>
-                <td>{value.role}</td>
-                <td>{value.date}</td>
+                <td>{value.userId}</td>
+                {/* Assuming the user has one role, use the first role's roleName */}
+                <td>{value.roles && value.roles.length > 0 ? value.roles[0].roleName : 'N/A'}</td>
               </tr>
             ))}
           </tbody>

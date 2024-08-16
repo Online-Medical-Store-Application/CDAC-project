@@ -3,12 +3,14 @@ package com.app.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +24,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @RestController
 @RequestMapping("/api")
 @SecurityRequirement(name = "E-Commerce Application")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
+	@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping("/admin/users")
 	public ResponseEntity<UserResponse> getUsers(
 			@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -36,7 +40,7 @@ public class UserController {
 		
 		UserResponse userResponse = userService.getAllUsers(pageNumber, pageSize, sortBy, sortOrder);
 		
-		return new ResponseEntity<UserResponse>(userResponse, HttpStatus.FOUND);
+		return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);
 	}
 	
 	@GetMapping("/public/users/{userId}")

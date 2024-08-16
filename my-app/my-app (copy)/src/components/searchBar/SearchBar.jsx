@@ -15,15 +15,7 @@ const SearchBar = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      if (!token) {
-        throw new Error('Token not found');
-      }
-      const response = await axios.get("http://localhost:8080/api/public/products", {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.get("http://localhost:8080/api/public/products");
       const productsArray = response.data.content || [];
       setProducts(productsArray);
     } catch (error) {

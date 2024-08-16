@@ -1,7 +1,9 @@
 package com.app.controllers;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,11 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.entities.Role;
+import com.app.entities.User;
 import com.app.exceptions.UserNotFoundException;
 import com.app.payloads.LoginCredentials;
 import com.app.payloads.UserDTO;
@@ -40,6 +45,8 @@ public class AuthController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/register")
 	public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody UserDTO user) throws UserNotFoundException {
 		String encodedPass = passwordEncoder.encode(user.getPassword());
@@ -54,6 +61,8 @@ public class AuthController {
 				HttpStatus.CREATED);
 	}
 
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/login")
 	public Map<String, Object> loginHandler(@Valid @RequestBody LoginCredentials credentials) {
 
@@ -61,9 +70,20 @@ public class AuthController {
 				credentials.getEmail(), credentials.getPassword());
 
 		authenticationManager.authenticate(authCredentials);
+		
+		Set<Role> roles = userService.verifyRole(credentials.getEmail());
+		Role firstRole = roles.iterator().next();
+		User user = userService.getUserInfo(credentials.getEmail());
 
 		String token = jwtUtil.generateToken(credentials.getEmail());
 
-		return Collections.singletonMap("jwt-token", token);
+		 Map<String, Object> response = new HashMap<>();
+		    response.put("jwt-token", token);
+		    response.put("role", firstRole.getRoleName());
+		    response.put("user", user.getEmail());
+		    response.put("firstName", user.getFirstName());
+		    response.put("lastName", user.getLastName());
+
+		    return response;
 	}
 }

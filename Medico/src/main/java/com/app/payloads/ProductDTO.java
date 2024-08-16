@@ -1,5 +1,7 @@
 package com.app.payloads;
 
+import com.app.entities.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +19,6 @@ public class ProductDTO {
 	private double price;
 	private double discount;
 	private double specialPrice;
+	private Category category_id;
 	
 }

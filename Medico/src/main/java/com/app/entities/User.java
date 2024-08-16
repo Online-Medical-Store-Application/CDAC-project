@@ -40,7 +40,7 @@ public class User {
 	private String firstName;
 	
 
-	@Size(min = 5, max = 30, message= "Last name should be between 5 and 30 characters long")
+	@Size(min = 2, max = 30, message= "Last name should be between 2 and 30 characters long")
 	@Pattern(regexp = "^[a-zA-Z]*$", message = "Last Name must not contain numbers or specail characters")
 	private String lastName;
 	
@@ -64,8 +64,8 @@ public class User {
 	private List<Address> addresses = new ArrayList<>();
 
 	
-	@OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-	private Cart cart;
+//	@OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+//	private Cart cart;
 	
 	
 }

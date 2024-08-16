@@ -5,6 +5,7 @@ import OrderDetail from "../../components/admin/OrderDetail";
 import UserDetail from "../../components/admin/UserDetail";
 import { Tabs, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";  // Importing useNavigate for navigation
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
@@ -16,6 +17,8 @@ const AdminDashboard = () => {
   const Role = JSON.parse(localStorage.getItem("role"));
   const firstName = JSON.parse(localStorage.getItem("firstName"));
   const lastName = JSON.parse(localStorage.getItem("lastName"));
+
+  const navigate = useNavigate();  // Initialize navigate
 
   useEffect(() => {
     // Fetch all products
@@ -32,8 +35,14 @@ const AdminDashboard = () => {
     // Fetch all orders
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("/api/orders");
-        setOrders(response.data);
+        const token = JSON.parse(localStorage.getItem('token'));
+        const response = await axios.get("http://localhost:8080/api/admin/orders", {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const ordersArray = response.data.content || [];
+        setOrders(ordersArray);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -95,6 +104,16 @@ const AdminDashboard = () => {
                 <span className="font-weight-bold">Role: </span>
                 {Role}
               </h1>
+            </div>
+
+            {/* Go Home Button */}
+            <div className="text-center mt-4">
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/")} // Navigate to home page
+              >
+                Go Home
+              </button>
             </div>
           </div>
         </div>
