@@ -2,4 +2,4 @@ I worked on the Medico project, an online medical store that allows users to bro
 
 # Project Video Demo
 
-Click to watch the video: [Project Demo Video](.Project video.mp4)
+Click to watch the video: [Project Demo Video](./Project video.mp4)
