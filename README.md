@@ -3,5 +3,5 @@ I worked on the Medico project, an online medical store that allows users to bro
 # Project Video Demo
 # Project Video Demo
 
-Click to watch the video: [Project Demo Video](https://github.com/Online-Medical-Store-Application/CDAC-project/raw/main/your-video.mp4)
+Click to watch the video: [Project Demo Video](https://github.com/Online-Medical-Store-Application/CDAC-project/raw/main/Project video.mp4)
 
